@@ -1,0 +1,42 @@
+﻿
+@model codeproject2.Models.NewsletterViewModel
+
+@{
+    ViewBag.Title = "Newsletters";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+<iframe id="nlview" name="nlview" width="100%" height="500" src='@($"/nlfiles/{Model.Newsletters[0].Filepath}")'></iframe>
+<div class="row">
+    <div class="col-md-4">
+        <ul>
+            @foreach (var newletter in Model.Newsletters)
+            {
+                <li><a class="nllinks" id="@(newletter.Id)" href='@($"/nlfiles/{newletter.Filepath}")' target="nlview">@newletter.Edition</a></li>
+
+            }
+        </ul>
+    </div>
+    <div class="col-md-8">
+        <label for="username">Email:</label>
+        <input type="text" id="Email" name="Email" /><br />
+        <textarea id="Comment" name="Comment" placeholder="Enter Comment Here.." style="width: 600px; height: 100px; margin-bottom: 10px;"></textarea><br />
+        <input type="submit" value="Save" id="submit" name="submit" class="btn btn-success" />
+    </div>
+</div>
+<input type="hidden" id="SelectedId" name="SelectedId" value='@($"{Model.Newsletters[0].Id}")'>
+}
+
+@section scripts {
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".nllinks").click(function() {
+            $("#SelectedId").val(this.id);
+        });
+    });
+</script>
+}
+
+
